@@ -133,3 +133,9 @@ It demonstrates how to:
 - design a clean and consistent state model
 - synchronize control between Linux and MCU layers
 - eliminate ambiguity between logical and visual states
+
+  ---
+
+## Acknowledgments
+
+This project was developed with the help of ChatGPT for design discussions, debugging, and documentation improvements.
