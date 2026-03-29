@@ -79,6 +79,21 @@ Examples:
 
 ---
 
+### 4. Relation with the Python program
+
+This is exactly the same principle used by the Python application.  
+The Python backend does not use a different mechanism for MPU LEDs.  
+It simply automates this manual sysfs control by writing to the same `brightness` files after disabling  
+the default triggers.  
+
+In other words:  
+
+- manual terminal commands prove how the MPU LEDs work
+- the Python program applies the same logic in a cleaner and synchronized way
+- the Web UI is a higher-level interface built on top of this low-level control
+
+---
+
 ## MCU LED Control (basic principle)
 
 The MCU controls RGB LEDs using standard GPIO pins.
@@ -107,21 +122,6 @@ Colors are created by combining channels:
 - cyan = G + B
 - white = R + G + B
 - off = all HIGH
-
----
-
-### 4. Relation with the Python program
-
-This is exactly the same principle used by the Python application.  
-The Python backend does not use a different mechanism for MPU LEDs.  
-It simply automates this manual sysfs control by writing to the same `brightness` files after disabling  
-the default triggers.  
-
-In other words:  
-
-- manual terminal commands prove how the MPU LEDs work
-- the Python program applies the same logic in a cleaner and synchronized way
-- the Web UI is a higher-level interface built on top of this low-level control
 
 ---
 
