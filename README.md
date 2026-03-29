@@ -3,7 +3,7 @@
 This project demonstrates a clean architecture for controlling RGB LEDs on an Arduino UNO Q using both:
 
 - the Linux side (MPU) via `/sys/class/leds`
-- the microcontroller side (MCU) via Bridge RPC
+- the microcontroller side (MCU) via Bridge RPC and direct GPIO control (digitalWrite)
 
 A Web UI provides real-time control of all LEDs.
 
