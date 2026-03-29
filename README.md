@@ -23,7 +23,7 @@ MCU (Arduino C++)
 ```
 ---
 
-## Manual control from the App Lab terminal
+## MPU LED Control - Manual control from the App Lab terminal
 
 Before using the Python application, it is useful to understand how the MPU LEDs can be controlled manually from the App Lab terminal.
 
@@ -76,7 +76,40 @@ Examples:
 - cyan: red = 0, green = 1, blue = 1
 - white: red = 1, green = 1, blue = 1
 - off: red = 0, green = 0, blue = 0
-  
+
+---
+
+## MCU LED Control (basic principle)
+
+The MCU controls RGB LEDs using standard GPIO pins.
+
+Each color channel (R, G, B) is controlled independently using `digitalWrite`.
+
+Important detail: the LEDs are **active-low**.
+
+- `LOW` → channel ON
+- `HIGH` → channel OFF
+
+Example:
+
+```cpp
+digitalWrite(LED3_R, LOW);   // red ON
+digitalWrite(LED3_G, LOW);   // green ON
+digitalWrite(LED3_B, LOW);   // blue ON
+```
+
+Colors are created by combining channels:
+- red = R
+- green = G
+- blue = B
+- yellow = R + G
+- magenta = R + B
+- cyan = G + B
+- white = R + G + B
+- off = all HIGH
+
+---
+
 ### 4. Relation with the Python program
 
 This is exactly the same principle used by the Python application.  
