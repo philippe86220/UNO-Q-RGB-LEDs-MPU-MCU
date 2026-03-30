@@ -2,6 +2,8 @@
 
 ![Leds](/doc//scrennshot.png)
 
+The two MPU LEDs are exposed through Linux (`/sys/class/leds`), while the two MCU LEDs are directly connected to STM32 GPIO pins.
+
 This project demonstrates a clean architecture for controlling the four RGB LEDs on an Arduino UNO Q using both:
 
 - the Linux side (MPU) via `/sys/class/leds`
