@@ -120,13 +120,6 @@ def set_trigger_none(path):
     except Exception as e:
         print(f"Trigger none failed for {path}: {e!r}", flush=True)
 
-
-#def ensure_at_least_one_channel(led_name):
-    #channels = STATE["leds"][led_name]["channels"]
-    #if not (channels["r"] or channels["g"] or channels["b"]):
-        #channels["r"] = True
-
-
 # -------------------------------------------------------------------
 # Pilotage MPU
 # -------------------------------------------------------------------
