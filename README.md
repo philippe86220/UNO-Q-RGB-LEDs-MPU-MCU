@@ -1,9 +1,15 @@
 # UNO Q RGB LED Control (MPU + MCU)
 
-This project demonstrates a clean architecture for controlling RGB LEDs on an Arduino UNO Q using both:
+This project demonstrates a clean architecture for controlling the four RGB LEDs on an Arduino UNO Q using both:
 
 - the Linux side (MPU) via `/sys/class/leds`
 - the microcontroller side (MCU) via Bridge RPC and direct GPIO control (digitalWrite)
+
+The board includes:
+- 2 RGB LEDs connected to the MPU (Linux side)
+- 2 RGB LEDs connected to the MCU (GPIO side)
+
+These RGB LEDs are driven as binary channels (ON/OFF only), where colors are created by combining the R, G, and B components.
 
 A Web UI provides real-time control of all LEDs.
 
