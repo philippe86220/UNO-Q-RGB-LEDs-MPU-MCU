@@ -71,7 +71,6 @@ STATE = {
     }
 }
 
-
 # -------------------------------------------------------------------
 # Utilitaires
 # -------------------------------------------------------------------
@@ -91,19 +90,8 @@ def clone_state():
         }
     return result
 
-
-def read_max_brightness(path):
-    try:
-        base = path.rsplit("/", 1)[0]
-        with open(base + "/max_brightness", "r") as f:
-            return int(f.read().strip())
-    except Exception as e:
-        print(f"Read max_brightness failed for {path}: {e!r}", flush=True)
-        return 1
-
 def write_led_sysfs(path, logical_on):
-    max_brightness = read_max_brightness(path)
-    value = f"{max_brightness}\n" if logical_on else "0\n"
+    value = f"1\n" if logical_on else "0\n"
     try:
         print(f"WRITE {path} <- {value.strip()}", flush=True)
         with open(path, "w") as f:
@@ -111,27 +99,21 @@ def write_led_sysfs(path, logical_on):
     except Exception as e:
         print(f"Brightness write failed for {path}: {e!r}", flush=True)
 
-
-def set_trigger_none(path):
-    try:
-        print(f"TRIGGER {path} <- none", flush=True)
-        with open(path, "w") as f:
-            f.write("none\n")
-    except Exception as e:
-        print(f"Trigger none failed for {path}: {e!r}", flush=True)
-
 # -------------------------------------------------------------------
 # Pilotage MPU
 # -------------------------------------------------------------------
 
 def init_mpu_leds():
-    print("Init MPU LED triggers...", flush=True)
-    for led_name, channels in MPU_LED_TRIGGERS.items():
+    for led_name, channels in MPU_LED_TRIGGERS.items():  # To take manual control
         for ch, trigger_path in channels.items():
-            set_trigger_none(trigger_path)
+            try:
+               with open(trigger_path, "w") as f:
+                   f.write("none\n")
+            except Exception as e:
+                print(f"Trigger none failed for {trigger_path}: {e!r}", flush=True)
 
-    print("Force MPU LEDs OFF...", flush=True)
-    for led_name, channels in MPU_LED_PATHS.items():
+   
+    for led_name, channels in MPU_LED_PATHS.items():  # Force MPU LEDs OFF
         for ch, bright_path in channels.items():
             write_led_sysfs(bright_path, False)
 
@@ -146,9 +128,6 @@ def apply_mpu_led(led_name):
         logical_on = is_on and channels[ch]
         write_led_sysfs(path, logical_on)
         
-
-
-
 # -------------------------------------------------------------------
 # Pilotage MCU
 # -------------------------------------------------------------------
@@ -205,7 +184,6 @@ def init_outputs():
 
     print("Initialisation terminee.", flush=True)
 
-
 # -------------------------------------------------------------------
 # API WebUI
 # -------------------------------------------------------------------
@@ -224,7 +202,6 @@ def toggle_led(led=None):
         apply_one_led(led)
         return clone_state()
 
-
 def toggle_channel(led=None, channel=None):
     if led not in STATE["leds"]:
         return {"ok": False, "error": "unknown_led"}
@@ -235,13 +212,11 @@ def toggle_channel(led=None, channel=None):
     with LOCK:
         channels = STATE["leds"][led]["channels"]
         channels[channel] = not channels[channel]
-        #ensure_at_least_one_channel(led)
 
         if STATE["leds"][led]["on"]:
             apply_one_led(led)
 
         return clone_state()
-
 
 def all_on():
     with LOCK:
@@ -258,13 +233,11 @@ def all_off():
         apply_all_leds()
         return clone_state()
 
-
 ui.expose_api("GET", "/state", state)
 ui.expose_api("GET", "/toggle_led", toggle_led)
 ui.expose_api("GET", "/toggle_channel", toggle_channel)
 ui.expose_api("GET", "/all_on", all_on)
 ui.expose_api("GET", "/all_off", all_off)
-
 
 # -------------------------------------------------------------------
 # Boucle utilisateur
@@ -272,7 +245,6 @@ ui.expose_api("GET", "/all_off", all_off)
 
 def loop():
     time.sleep(0.05)
-
 
 print("UNO Q RGB WebUI demo ready", flush=True)
 print("APIs: /state /toggle_led?led=led1 /toggle_channel?led=led1&channel=r /all_on /all_off", flush=True)
