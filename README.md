@@ -1,6 +1,6 @@
 # UNO Q RGB LED Control (MPU + MCU)
 
-![Leds](/doc//screenshot.png)
+![Leds](/doc//scrennshot.png)
 
 This project demonstrates a clean architecture for controlling the four RGB LEDs on an Arduino UNO Q using both:
 
