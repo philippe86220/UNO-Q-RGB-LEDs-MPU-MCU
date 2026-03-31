@@ -193,10 +193,11 @@ The browser sends a request to Python, which:
 - applies the change to the LEDs (MPU / MCU)
 - returns the updated `STATE`
   
-The WebUI is then updated using this returned state.  
-👉 The visual LEDs in the browser are updated only because the API returns the new state.  
-👉 The browser does not update itself automatically.  
-👉 It needs the server to send back the new state after each action.  
+The WebUI is then updated using this returned state :  
+
+- The visual LEDs in the browser are updated only because the API returns the new state  
+- The browser does not update itself automatically  
+- It needs the server to send back the new state after each action 
 
 --- 
 
