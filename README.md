@@ -161,8 +161,6 @@ color_output = on AND channel
 
 ## Data flow
 
-## Data flow
-
 `return {"ok": True, "leds": STATE["leds"]}  # Data returned to the browser`
 
 The system does not work as a simple one-way command path.
