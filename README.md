@@ -188,7 +188,7 @@ WebUI -> Python API -> STATE update -> MPU / MCU LED control
                            -> return STATE to WebUI
 ```
 
-The browser display is always based on `STATE`, not on the real hardware state.
+The browser display is always based on `STATE`, not on the real hardware state.  
 The WebUI never reads the hardware directly.  
 It only reflects the `STATE` managed by Python.  
 
