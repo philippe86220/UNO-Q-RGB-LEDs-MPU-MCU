@@ -75,20 +75,6 @@ STATE = {
 # Utilitaires
 # -------------------------------------------------------------------
 
-def clone_state():
-    result = {"ok": True, "leds": {}}
-    for led_name, led_data in STATE["leds"].items():
-        result["leds"][led_name] = {
-            "label": led_data["label"],
-            "side": led_data["side"],
-            "on": led_data["on"],
-            "channels": {
-                "r": led_data["channels"]["r"],
-                "g": led_data["channels"]["g"],
-                "b": led_data["channels"]["b"],
-            },
-        }
-    return result
 
 def write_led_sysfs(path, logical_on):
     value = f"1\n" if logical_on else "0\n"
@@ -190,7 +176,7 @@ def init_outputs():
 
 def state():
     with LOCK:
-        return clone_state()
+        return {"ok": True, "leds": STATE["leds"]} # Ce que l'API renvoie au navigateur
 
 
 def toggle_led(led=None):
@@ -200,7 +186,7 @@ def toggle_led(led=None):
     with LOCK:
         STATE["leds"][led]["on"] = not STATE["leds"][led]["on"]
         apply_one_led(led)
-        return clone_state()
+        return {"ok": True, "leds": STATE["leds"]} # Ce que l'API renvoie au navigateur
 
 def toggle_channel(led=None, channel=None):
     if led not in STATE["leds"]:
@@ -216,14 +202,14 @@ def toggle_channel(led=None, channel=None):
         if STATE["leds"][led]["on"]:
             apply_one_led(led)
 
-        return clone_state()
+        return {"ok": True, "leds": STATE["leds"]} # Ce que l'API renvoie au navigateur
 
 def all_on():
     with LOCK:
         for led_name in STATE["leds"]:
             STATE["leds"][led_name]["on"] = True
         apply_all_leds()
-        return clone_state()
+        return {"ok": True, "leds": STATE["leds"]} # Ce que l'API renvoie au navigateur
 
 
 def all_off():
@@ -231,7 +217,7 @@ def all_off():
         for led_name in STATE["leds"]:
             STATE["leds"][led_name]["on"] = False
         apply_all_leds()
-        return clone_state()
+        return {"ok": True, "leds": STATE["leds"]} # Ce que l'API renvoie au navigateur
 
 ui.expose_api("GET", "/state", state)
 ui.expose_api("GET", "/toggle_led", toggle_led)
