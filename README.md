@@ -1,6 +1,6 @@
 # UNO Q RGB LED Control (MPU + MCU)
 
-![Leds](/doc//scrennshot.png)
+![Leds](/doc/scrennshot.png)
 
 The two MPU LEDs are exposed through Linux (`/sys/class/leds`), while the two MCU LEDs are directly connected to STM32 GPIO pins.
 
@@ -143,10 +143,9 @@ Each LED is defined by two independent components:
 - `RGB`: color channels
 
 Final output logic:
-
-
+```
 color_output = on AND channel
-
+```
 ---
 
 ## Features
@@ -173,8 +172,8 @@ This state is applied:
 - directly to the MPU LEDs through `/sys/class/leds`
 - and sent to the MCU for the LEDs controlled by the microcontroller
 
-The MCU does not send the state back.  
-It simply applies the received command.
+The MCU does not send the state back.
+It simply applies the received command without feedback.
 
 The WebUI is updated using the API response, which returns the current logical state (`STATE`) after each action.
 
@@ -189,7 +188,9 @@ WebUI -> Python API -> STATE update -> MPU / MCU LED control
                            -> return STATE to WebUI
 ```
 
-The browser display is always based on `STATE`, not on direct hardware feedback.
+The browser display is always based on `STATE`, not on the real hardware state.
+The WebUI never reads the hardware directly.  
+It only reflects the `STATE` managed by Python.  
 
 ---
 
