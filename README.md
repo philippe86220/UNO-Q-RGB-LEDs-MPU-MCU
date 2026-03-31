@@ -160,8 +160,6 @@ color_output = on AND channel
 
 ## Data flow
 
-`return {"ok": True, "leds": STATE["leds"]}  # Data returned to the browser`
-
 The system does not work as a simple one-way command path.
 
 A user action in the WebUI sends a request to the Python API.  
@@ -195,6 +193,8 @@ It only reflects the `STATE` managed by Python.
 ---
 
 ## Why the API returns STATE
+
+`return {"ok": True, "leds": STATE["leds"]}  # Data returned to the browser`
 
 When a user clicks a button in the WebUI, the visual state does not change immediately by itself.  
 
