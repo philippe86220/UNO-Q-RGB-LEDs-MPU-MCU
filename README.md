@@ -161,6 +161,8 @@ color_output = on AND channel
 
 ## Data flow
 
+`return {"ok": True, "leds": STATE["leds"]} # Ce que l'API renvoie au navigateur`
+
 The system does not work as a simple one-way command path.  
 
 A user action in the WebUI updates the internal state in Python.  
