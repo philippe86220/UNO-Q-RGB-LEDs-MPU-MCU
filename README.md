@@ -159,6 +159,47 @@ color_output = on AND channel
 
 ---
 
+## Data flow
+
+The system does not work as a simple one-way command path.  
+
+A user action in the WebUI updates the internal state in Python.  
+This state is then applied:
+
+- directly to the MPU LEDs through /sys/class/leds
+- and sent to the MCU for the LEDs controlled by the microcontroller
+  
+The MCU does not send the state back.  
+It simply applies the received command.
+
+The WebUI is updated by the Python API response, which returns the current logical state (`STATE`) after each action.  
+So the flow is:  
+
+```
+WebUI -> Python API -> STATE update -> MPU / MCU LED control
+                           |
+                           -> return STATE to WebUI
+```
+
+---
+
+## Why the API returns STATE
+
+When a user clicks a button in the WebUI, the visual state does not change immediately by itself.  
+
+The browser sends a request to Python, which:  
+
+- updates the internal `STATE`
+- applies the change to the LEDs (MPU / MCU)
+- returns the updated `STATE`
+  
+The WebUI is then updated using this returned state.  
+👉 The visual LEDs in the browser are updated only because the API returns the new state.  
+👉 The browser does not update itself automatically.  
+👉 It needs the server to send back the new state after each action.  
+
+--- 
+
 ## How to Run
 
 1. Upload the MCU code
