@@ -237,6 +237,22 @@ It demonstrates how to:
 
 ---
 
+### Important: Turn off LEDs before exiting
+
+Before stopping the application, it is recommended to click **"Turn all off"**.
+
+Even though the system restores default LED triggers after the application stops,  
+the RGB channel values may remain active.
+
+This can lead to unexpected colors caused by a mix of:
+
+- system-controlled triggers
+- previously active RGB channels
+
+To avoid this, all LEDs should be turned off before exiting the application.
+
+---
+
 ## Acknowledgments
 
 This project was developed with the help of ChatGPT for design discussions, debugging, and documentation improvements.
