@@ -232,6 +232,11 @@ It demonstrates how to:
 
   ---
 
+# Screenshot
+![Serveur](/doc//screenshot.jpg)
+
+---
+
 ## Acknowledgments
 
 This project was developed with the help of ChatGPT for design discussions, debugging, and documentation improvements.
